@@ -17,7 +17,13 @@ describe SnackAPI do
 
     it "has the desired key in the header " do
       client = class_double("client")
-      expect(client).to receive(:get).with(any_args, hash_including(headers: hash_including(:Authorization => "ApiKey testkey")))
+      expect(client).to receive(:get).with(any_args, 
+        hash_including(
+          headers: hash_including(
+            :Authorization => "ApiKey testkey"
+            )
+          )
+        )
       API = SnackAPI.new(client, "http://test.com", "testkey")
       API.get_snacks
     end  
