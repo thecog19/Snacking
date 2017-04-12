@@ -1,5 +1,5 @@
 class SnackAPI
-  def initalize(url = "https://api-snacks.nerderylabs.com/v1/snacks",
+  def initialize(url = "https://api-snacks.nerderylabs.com/v1/snacks",
                 client = HTTParty,
                 key = ENV["APIkey"])
     @url = url
@@ -11,8 +11,11 @@ class SnackAPI
   def api_test
     @client.get(@url, 
                 headers: {
-                  "key" => @key
+                  Authorization: "ApiKey #{@key}"
                   })
   end
 
 end
+
+c = SnackAPI.new
+p c.api_test
