@@ -1,9 +1,22 @@
+#i've rolled all our API interactions into its own model
+#thus if the api ever changes all we have to do is modify this file
+#remember to set up your api key as an env variable using figaro
+#https://github.com/laserlemon/figaro
+
+
 class SnackAPI
+  #in case the url changes or there's a need to use a client other than 
+  #httparty this makes life easier for testing purposes as well, letting us stub
+  #out the requests, and reducing load on the actual api
+  #api docs: https://api-snacks.nerderylabs.com/v1/help
   def initialize(url = "https://api-snacks.nerderylabs.com/v1/snacks",
                 client = HTTParty,
                 key = ENV["APIkey"])
+
     @url = url
     @client = client
+    #header requires the content type or else the post requests will fail
+    #not technically needed for the get request but it doesn't adversely affect it
     @header =  {Authorization: "ApiKey #{key}",
                 'Content-Type' => 'application/json'}
   end
@@ -27,6 +40,3 @@ class SnackAPI
   end
 
 end
-
-c = SnackAPI.new
-p c.get_snacks
