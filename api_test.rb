@@ -4,18 +4,29 @@ class SnackAPI
                 key = ENV["APIkey"])
     @url = url
     @client = client
-    @key = key
+    @header =  {Authorization: "ApiKey #{key}",
+                'Content-Type' => 'application/json'}
   end
 
 
-  def api_test
+  def get_snacks
     @client.get(@url, 
-                headers: {
-                  Authorization: "ApiKey #{@key}"
-                  })
+                headers: @header
+                )
+  end
+
+  def add_snack(snack, location, lattitude = nil, longitude = nil)
+    @client.post(@url, 
+                headers: @header,
+                body: {
+                  "name" => snack,
+                  "location" => location,
+                  "lattitude" => lattitude,
+                  "longitude" => longitude
+                  }.to_json)
   end
 
 end
 
 c = SnackAPI.new
-p c.api_test
+p c.get_snacks
