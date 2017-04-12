@@ -41,7 +41,7 @@ gem 'figaro'
 group :development, :test do
   # Replaced bybugs with pry. Personal preference 
   gem 'pry-rails'
-  gem 'rspec-rails', '~> 3.5'
+  gem 'rspec-rails'
 end
 
 group :development do
@@ -53,7 +53,7 @@ group :development do
   
   #guard so we can test while developing! 
   #bundle exec guard  to run it
-  gem 'guard'
+  gem  'guard-rspec'
 
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'

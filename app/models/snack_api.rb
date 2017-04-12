@@ -9,8 +9,8 @@ class SnackAPI
   #httparty this makes life easier for testing purposes as well, letting us stub
   #out the requests, and reducing load on the actual api
   #api docs: https://api-snacks.nerderylabs.com/v1/help
-  def initialize(url = "https://api-snacks.nerderylabs.com/v1/snacks",
-                client = HTTParty,
+  def initialize(client = HTTParty,  
+                url = "https://api-snacks.nerderylabs.com/v1/snacks",
                 key = ENV["APIkey"])
 
     @url = url
