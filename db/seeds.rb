@@ -5,3 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+p "purging database"
+Vote.destroy_all
+Suggestion.destroy_all
+
+p "generating suggestions"
+
+p "generating votes"
+

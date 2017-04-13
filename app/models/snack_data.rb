@@ -10,7 +10,6 @@ class SnackData
         mandatory_array << snack
       end
     end
-    p snack_array
     mandatory_array
   end 
 end

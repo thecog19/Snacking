@@ -1,25 +1,31 @@
 
 <div class="row">
-  <div class="col-xs-4">
-    <h4> Permanent Snacks</h4>
-    <!-- this could be refactored into a partial, in a bigger app -->
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Snack Name</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @permanent.each do |item| %>
-        <tr>
-         <td><%= item["name"] %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
+  <% unless @online %>
+    <div class="alert alert-danger">
+      <strong>Warning:</strong> This page is down for mantienence.
+    </div>
+  <% else %>
+    <div class="col-xs-4">
+      <h4> Permanent Snacks</h4>
+      <!-- this could be refactored into a partial, in a bigger app -->
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Snack Name</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @permanent.each do |item| %>
+          <tr>
+           <td><%= item["name"] %></td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
 
-  <div class="col-xs-8">
-    <h4>Suggested Snacks</h4>
-  </div>
+    <div class="col-xs-8">
+      <h4>Suggested Snacks</h4>
+    </div>
+  <% end %>
 </div>

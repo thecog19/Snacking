@@ -36,14 +36,15 @@ class SnackAPI
                 )
   end
 
-  def add_snack(snack, location, lattitude = nil, longitude = nil)
+  def add_snack(snack, location)
+    #this originally also had lattiude and longitude
+    #but as its not used anywhere in the codebase 
+    #i refactored away from it. YAGNI 
     @client.post(@url, 
                 headers: @header,
                 body: {
                   "name" => snack,
-                  "location" => location,
-                  "lattitude" => lattitude,
-                  "longitude" => longitude
+                  "location" => location
                   }.to_json)
   end
 
