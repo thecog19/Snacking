@@ -19,4 +19,24 @@ RSpec.describe Suggestion, type: :model do
     suggestion
     expect(Suggestion.create(name: "test").valid?).to be false
   end
+
+  describe "#suggestion_data" do
+    let(:snackdata) {double("snackdata")}
+    #we explicitly don't test #generate_names, its a private method, and an implementation detail
+    it "returns an active record relation" do
+      allow(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
+      expect(Suggestion.suggestion_data(snackdata)).to be_a(ActiveRecord::Relation )
+    end
+
+    it "returns all the matching suggestions" do
+      suggestion
+      allow(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
+      expect(Suggestion.suggestion_data(snackdata).first).to eq(suggestion)
+    end
+
+    it "calls the SnackData" do 
+      expect(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
+      Suggestion.suggestion_data(snackdata)
+    end
+  end
 end

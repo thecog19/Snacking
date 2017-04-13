@@ -5,8 +5,8 @@ class Suggestion < ApplicationRecord
 
   def self.suggestion_data(snackdata = SnackData)
     api_suggestions = snackdata.optional_snacks
-    names = generate_names(api_suggestions) 
-    self.where('name IN (?)', name_list))
+    name_list = generate_names(api_suggestions) 
+    self.where(name: name_list)
   end
 
   def self.generate_names(arr)
