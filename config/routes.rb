@@ -1,3 +1,4 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  #our root is the vote index. As good a landing page as any!
+  root 'votes#index'
 end
