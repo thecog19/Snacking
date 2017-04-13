@@ -1,3 +1,5 @@
 A note. I deliberately did not use a front end framework such as AngularJS, becuase it makes internal apps more difficult to mantain, and because given the relatively small scope of the app, it didn't make sense to layer onn another MVC, but if this app were bigger, it would be very suited to a js framework of some kind. Specifically to avoid full page refeshes on trivial actions.  
 
 Another note, we're doing all our vote validation on the frontend, which means a canny user could delete their cookies and vote several times. The way around this, is of course to make a login system and track votes on a per user basis. For the purpses of this exercise we are *not* doing that, as the exercise requests we don't try to overreach, but the core idea would be to use devise to do authorization, and the have the votes table extended to have a user_id, we'd then verify whenever a post request was made that the request itself is valid. 
+
+I also did not do integration tests for an inward facing app. Had I had more time it might have been a consideration, although it should be noted that integration tests are a polarizing topic, their worth is certainly debatable.   
