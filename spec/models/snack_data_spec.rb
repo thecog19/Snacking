@@ -6,20 +6,23 @@ describe SnackData do
     let(:client) {double("client")}
     let(:sample_group) do
       [{
-          "id": 6,
-          "name": "Gorp",
-          "optional": true,
-          "purchaseLocations":  "John's Grocery, Corner C-Store",
-          "purchaseCount": 0,
-          "lastPurchaseDate": nil
+          #these actually have to be a hashrockets not colens, or else
+          #ruby will convert the string to symbols
+          #which is not what API actually returns
+          "id"=> 6,
+          "name" => "Gorp",
+          "optional" => true,
+          "purchaseLocations"=>  "John's Grocery, Corner C-Store",
+          "purchaseCount"=> 0,
+          "lastPurchaseDate"=> nil
         },
         {
-          "id": 17,
-          "name": "Bacon Jerky",
-          "optional": false,
-          "purchaseLocations": "John's Grocery",
-          "purchaseCount": 542,
-          "lastPurchaseDate": "4/12/2017"
+          "id"=> 17,
+          "name"=> "Bacon Jerky",
+          "optional" => false,
+          "purchaseLocations"=> "John's Grocery",
+          "purchaseCount"=> 542,
+          "lastPurchaseDate"=> "4/12/2017"
         }]
     end
 
@@ -35,20 +38,20 @@ describe SnackData do
 
     it "returns an empty array if all snacks are optional" do 
        allow(client).to receive(:get_snacks).and_return([{
-          "id": 6,
-          "name": "Gorp",
-          "optional": true,
-          "purchaseLocations":  "John's Grocery, Corner C-Store",
-          "purchaseCount": 0,
-          "lastPurchaseDate": nil
+          "id"=> 6,
+          "name"=> "Gorp",
+          "optional" => true,
+          "purchaseLocations"=>  "John's Grocery, Corner C-Store",
+          "purchaseCount"=> 0,
+          "lastPurchaseDate"=> nil
         },
         {
-          "id": 17,
-          "name": "Bacon Jerky",
-          "optional": true,
-          "purchaseLocations": "John's Grocery",
-          "purchaseCount": 542,
-          "lastPurchaseDate": "4/12/2017"
+          "id"=> 17,
+          "name"=> "Bacon Jerky",
+          "optional" => true,
+          "purchaseLocations"=> "John's Grocery",
+          "purchaseCount"=> 542,
+          "lastPurchaseDate"=> "4/12/2017"
         }])
       expect(SnackData.permanent_snacks(client)).to eq([])
     end
@@ -57,12 +60,12 @@ describe SnackData do
       allow(client).to receive(:get_snacks).and_return(sample_group)
 
       expect(SnackData.permanent_snacks(client)).to contain_exactly({
-          "id": 17,
-          "name": "Bacon Jerky",
-          "optional": false,
-          "purchaseLocations": "John's Grocery",
-          "purchaseCount": 542,
-          "lastPurchaseDate": "4/12/2017"
+          "id"=> 17,
+          "name"=> "Bacon Jerky",
+          "optional"=> false,
+          "purchaseLocations"=> "John's Grocery",
+          "purchaseCount"=> 542,
+          "lastPurchaseDate"=> "4/12/2017"
         })
     end  
 
@@ -70,12 +73,12 @@ describe SnackData do
       allow(client).to receive(:get_snacks).and_return(sample_group)
 
       expect(SnackData.permanent_snacks(client)).to_not include({
-          "id": 6,
-          "name": "Gorp",
-          "optional": true,
-          "purchaseLocations":  "John's Grocery, Corner C-Store",
-          "purchaseCount": 0,
-          "lastPurchaseDate": nil
+          "id"=> 6,
+          "name"=> "Gorp",
+          "optional"=> true,
+          "purchaseLocations"=>  "John's Grocery, Corner C-Store",
+          "purchaseCount"=> 0,
+          "lastPurchaseDate"=> nil
         })
     end
   end

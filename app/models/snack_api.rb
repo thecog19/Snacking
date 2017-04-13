@@ -21,6 +21,14 @@ class SnackAPI
                 'Content-Type' => 'application/json'}
   end
 
+  #a simple method to test if the API is working
+  def online?
+     response = @client.get(@url, 
+                headers: @header
+                )
+     response.code == 200
+  end
+
 
   def get_snacks
     @client.get(@url, 

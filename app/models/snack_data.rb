@@ -4,12 +4,13 @@ class SnackData
   #method simply gets all the snacks and returns those with "optional: false"
   def self.permanent_snacks(client=SnackAPI.new)
     snack_array = client.get_snacks
-    mandatory_array = []
+    mandatory_array = [] 
     snack_array.each do |snack|
-      if !snack[:optional]
+      if !snack["optional"]
         mandatory_array << snack
       end
     end
+    p snack_array
     mandatory_array
   end 
 end
