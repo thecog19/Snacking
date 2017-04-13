@@ -12,4 +12,15 @@ class SnackData
     end
     mandatory_array
   end 
+
+  def self.optional_snacks(client=SnackAPI.new)
+    snack_array = client.get_snacks
+    optional_array = [] 
+    snack_array.each do |snack|
+      if snack["optional"]
+        optional_array << snack
+      end
+    end
+    optional_array
+  end
 end
