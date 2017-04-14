@@ -1,5 +1,4 @@
 class Suggestion < ApplicationRecord
-  has_many :votes, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 
@@ -12,7 +11,7 @@ class Suggestion < ApplicationRecord
   def self.generate_names(arr)
     name_list = []
     arr.each do |item|
-      name_list << item["name"]
+      item["votes"] = self.where(name: item["name"]).first.vot
     end
     name_list
   end
