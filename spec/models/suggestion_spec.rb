@@ -1,13 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Suggestion, type: :model do
-  let(:suggestion) {Suggestion.create(name: "test")}
-  let(:vote) {Vote.create(suggestion_id: suggestion.id, votes: 3)}
-  
-  it "has many votes" do
-    #basically ensure that when you call votes you get back an active record array
-    expect(suggestion.votes).to be_a(ActiveRecord::Associations::CollectionProxy)
-  end
+  let(:suggestion) {Suggestion.create(name: "test", votes: 8)}
 
   it "validates for name existance" do
     expect(Suggestion.create(name: nil).valid?).to be false
@@ -22,21 +16,27 @@ RSpec.describe Suggestion, type: :model do
 
   describe "#suggestion_data" do
     let(:snackdata) {double("snackdata")}
-    #we explicitly don't test #generate_names, its a private method, and an implementation detail
-    it "returns an active record relation" do
+    #we explicitly don't test #add_votes, its a private method, and an implementation detail
+    it "returns an array" do
       allow(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
-      expect(Suggestion.suggestion_data(snackdata)).to be_a(ActiveRecord::Relation )
-    end
+      expect(Suggestion.suggestion_data(snackdata)).to be_a(Array )
+    end 
 
-    it "returns all the matching suggestions" do
+    it "Adds vote to the items returned by snackdata" do
       suggestion
       allow(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
-      expect(Suggestion.suggestion_data(snackdata).first).to eq(suggestion)
-    end
+      expect(Suggestion.suggestion_data(snackdata).first).to eq({"name" => "test", "votes" => 8})
+    end 
 
     it "calls the SnackData" do 
       expect(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
       Suggestion.suggestion_data(snackdata)
+    end
+
+    it "returns the expected array of hashes" do
+      suggestion
+      allow(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
+      expect(Suggestion.suggestion_data(snackdata)).to eq([{"name" => "test", "votes" => 8}])
     end
   end
 end

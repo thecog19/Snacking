@@ -2,16 +2,20 @@ class Suggestion < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  #modify this method, return just the suggestion objects i need witht the number of votes attached. 
+  #this method gets the optional snacks and adds the current vote total to the ones that are still there.  
   def self.suggestion_data(snackdata = SnackData)
-    api_suggestions = snackdata.optional_snacks
-    add_votes(api_suggestions) 
+    add_votes(snackdata.optional_snacks) 
   end
 
-  def self.generate_names(arr)
+  private 
+
+  def self.add_votes(arr)
     name_list = []
     arr.each do |item|
-      item["votes"] = self.where(name: item["name"]).first.vot
+      unless self.where(name: item["name"]).empty? 
+        item["votes"] = self.where(name: item["name"]).first.votes
+        name_list << item
+      end
     end
     name_list
   end
