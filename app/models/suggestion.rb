@@ -3,10 +3,10 @@ class Suggestion < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
+  #modify this method, return just the suggestion objects i need witht the number of votes attached. 
   def self.suggestion_data(snackdata = SnackData)
     api_suggestions = snackdata.optional_snacks
-    name_list = generate_names(api_suggestions) 
-    self.where(name: name_list)
+    add_votes(api_suggestions) 
   end
 
   def self.generate_names(arr)

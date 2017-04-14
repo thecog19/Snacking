@@ -4,7 +4,8 @@ class VotesController < ApplicationController
 
   def index
     @permanent = SnackData.permanent_snacks
-    @suggested = Suggestion.all
+    @suggestions = Suggestion.all
+    @suggestions_info = nil #this will contain all the data for each suggestion
     @online = SnackAPI.new.online?
   end
 
