@@ -4,9 +4,13 @@ class VotesController < ApplicationController
 
   def index
     if cookies[:votes].blank?
-      cookies[:votes] = {value: 3, :expires => end_of_month}
-
+      #cookie expirations need to be in time format
+      #or else they'll throw an error when they try to call .gmt on the expiration value
+      #so we converte the date object to a time object
+      expiration = Time.parse(Date.today.end_of_month.to_s)
+      cookies[:votes] = {value: 3, :expires => expiration}
     end
+
     @votes = cookies[:votes]
     @permanent = SnackData.permanent_snacks
     @suggestions = Suggestion.suggestion_data
@@ -15,10 +19,11 @@ class VotesController < ApplicationController
 
   def create
     respond_to :json
-    unless cookies[:votes] == 0 
+    if cookies[:votes].to_i > 0 
       cookies[:votes] = cookies[:votes].to_i - 1
+      render :json => {:status => 200, return: cookies[:votes]}
     else
-      "No votes left this month"
+      render :json => { :errors => "No votes left" }, :status => 403
     end
 
   end

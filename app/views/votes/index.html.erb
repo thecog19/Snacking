@@ -27,7 +27,7 @@
     <div class="col-xs-8">
       <h4>Suggested Snacks</h4>
       <div class="panel panel-info">
-        <div class="panel-body">You have <strong><%= @votes %></strong> votes left</div>
+        <div class="panel-heading" id="vote-box">You have <strong id="vote-count"><%= @votes %></strong> votes left</div>
       </div>
       <table class="table table-bordered">
         <thead>
@@ -44,7 +44,7 @@
             <td><%= item["name"] %></td>
             <td><%= item["votes"] %></td>
             <td><%= item["lastPurchaseDate"] || "Never Purchased!" %></td>
-            <td><%= button_to 'Vote', {:controller => "votes", :action => "create", name: item["name"]},:method=> :post, :remote => true, class: "btn btn-primary"  %>
+            <td><%= button_to 'Vote', {:controller => "votes", :action => "create", name: item["name"]},:method=> :post, :remote => true, class: "btn btn-primary vote-button"  %>
             </td>
           </tr>
         <% end %>
