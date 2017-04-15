@@ -42,11 +42,11 @@
         <% @suggestions.each do |item| %>
           <tr>
             <td><%= item["name"] %></td>
-            <td><%= item["votes"] %></td>
+            <td id=<%="#{item["name"]}-votes"%>><%= item["votes"] %></td>
             <td><%= item["lastPurchaseDate"] || "Never Purchased!" %></td>
             <td>
             <% unless @disabled.include?(item["name"]) %>
-              <%= @disabled.include?(item) %>
+
               <%= button_to 'Vote', {:controller => "votes", 
                                       :action => "create", 
                                       name: item["name"]},

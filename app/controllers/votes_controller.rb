@@ -1,6 +1,7 @@
 class VotesController < ApplicationController
-  #Write seeds file
-  #write rake task to be run every month (via cron, to reset "selected") (will delete the suggestions table and the votes table)
+  #write some tests for this controller
+  #Write rake task to be run every month (via cron, to reset "selected") (will delete the suggestions table)
+  #re-write readme
 
   def index
     if cookies[:votes].blank?
@@ -22,14 +23,13 @@ class VotesController < ApplicationController
 
   def create
     respond_to :json
-    if cookies[:votes].to_i > 0 && includes_disabled?
+    if cookies[:votes].to_i > 0 && includes_disabled?(cookies[:disabled])
                      
       cookies[:votes] = cookies[:votes].to_i - 1
 
       cookies[:disabled] = update_cookie_val(cookies[:disabled], params["name"])
-      suggestion = Suggestion.where(name: params["name"]).first
 
-      suggestion.update(votes: suggestion.votes += 1)
+      update_vote_count(params["name"])
 
       render :json => {:status => 200, return: cookies[:votes]}
 
@@ -46,8 +46,8 @@ class VotesController < ApplicationController
 
   end
 
-  def includes_disabled?
-     !deserialize_cookie(cookies[:disabled]).include?(params["name"])
+  def includes_disabled?(cookie)
+     !deserialize_cookie(cookie).include?(params["name"])
   end
 
   def deserialize_cookie(cookie)
@@ -55,6 +55,7 @@ class VotesController < ApplicationController
     #its not elegant, but without an user login
     #there's no good way to keep track of what people have voted for
     #which is a pain, in the real world, it'd be less time intensive to just roll out devise.
+   return [] if !cookie
    cookie.split("|")
   end
 
@@ -64,6 +65,11 @@ class VotesController < ApplicationController
     value_array = deserialize_cookie(cookie)
     value_array << value
     value_array.join("|")
+  end
+
+  def update_vote_count(name)
+      suggestion = Suggestion.where(name: name).first
+      suggestion.update(votes: suggestion.votes += 1)
   end
 
 end
