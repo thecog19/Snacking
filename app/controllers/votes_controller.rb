@@ -9,7 +9,7 @@ class VotesController < ApplicationController
       #so we converte the date object to a time object
       expiration = Time.parse(Date.today.end_of_month.to_s)
       cookies[:votes] = {value: 3, :expires => expiration}
-      cookies[:disabled] = ""
+      cookies[:disabled] = {value: "", :expires => expiration}
     end
 
     @votes = cookies[:votes]

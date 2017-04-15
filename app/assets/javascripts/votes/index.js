@@ -9,6 +9,7 @@ var SnackManager = (function(){
     $(document).ajaxSuccess(
       function(event, xhr, status, error) {
         $("#vote-count").text(xhr.responseJSON.return)
+        // update number of votes on the item too
       }).ajaxError(
       function(event, xhr, status, error) {
 
