@@ -44,7 +44,21 @@
             <td><%= item["name"] %></td>
             <td><%= item["votes"] %></td>
             <td><%= item["lastPurchaseDate"] || "Never Purchased!" %></td>
-            <td><%= button_to 'Vote', {:controller => "votes", :action => "create", name: item["name"]},:method=> :post, :remote => true, class: "btn btn-primary vote-button"  %>
+            <td>
+            <% unless @disabled.include?(item["name"]) %>
+              <%= @disabled.include?(item) %>
+              <%= button_to 'Vote', {:controller => "votes", 
+                                      :action => "create", 
+                                      name: item["name"]},
+                                      :method=> :post, 
+                                      :remote => true, 
+                                      class: "btn btn-primary vote-button", 
+                                      id: "#{item["name"]}"  
+              %>
+              <div class="hidden">Already Voted</div>
+            <% else %>
+              Already Voted
+            <% end %>
             </td>
           </tr>
         <% end %>
