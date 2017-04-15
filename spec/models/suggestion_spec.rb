@@ -39,4 +39,25 @@ RSpec.describe Suggestion, type: :model do
       expect(Suggestion.suggestion_data(snackdata)).to eq([{"name" => "test", "votes" => 8}])
     end
   end
+  describe "#unused_api_suggestions" do
+    let(:snackdata) {double("snackdata")}
+    
+    it "returns an array" do
+       allow(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
+      expect(Suggestion.unused_api_suggestions(snackdata)).to be_a(Array)
+    end
+
+    it "gets data from the API" do 
+       expect(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
+      Suggestion.unused_api_suggestions(snackdata)
+    end
+
+    it "returns only unused names" do 
+      suggestion
+      allow(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}, {"name" => "orange"}]) 
+      expect(Suggestion.unused_api_suggestions(snackdata)).to eq(["orange"])
+    end
+  
+  end
+
 end

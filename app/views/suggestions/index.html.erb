@@ -1,1 +1,11 @@
-RENDER THE PAGE
+<div class="row">
+  <% unless @online %>
+    <div class="alert alert-danger">
+      <strong>Warning:</strong> This page is down for mantienence.
+    </div>
+  <% else %>
+   Drop down will go here
+
+   Form will go here
+  <% end %>
+</div>
