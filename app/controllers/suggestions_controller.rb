@@ -2,7 +2,8 @@ class SuggestionsController < ApplicationController
 
   def index
     if cookies[:suggestions].blank?
-      cookies[:suggestions] = 1
+      expiration = Time.parse(Date.today.end_of_month.to_s)
+      cookies[:suggestions] = {value: 1, :expires => expiration}
     end
     @online = SnackAPI.new.online?
     @submissions_left = cookies[:suggestions].to_i
@@ -18,7 +19,6 @@ class SuggestionsController < ApplicationController
       redirect_back(fallback_location: 'suggestion#index')
       return
     end
-
 
     if suggestion.valid? && Suggestion.unused_api_suggestions.include?(create_params["snack_name"])
 
