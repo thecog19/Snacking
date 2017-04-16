@@ -1,30 +1,43 @@
 <div class="row">
+  <div class="col-sm-10">
   <% unless @online %>
     <div class="alert alert-danger">
       <strong>Warning:</strong> This page is down for mantienence.
     </div>
   <% else %>
-   Drop down will go here
+    <div class="alert alert-notice">
+      You have <strong><%= @submissions_left %></strong> suggestions left this month
+    </div>
 
-   <%= @suggestions %>
+
+    <%= form_for :suggestion do |fr| %>
+      <%= label_tag(:snack_name, "Suggest:") %>
+      <%= fr.select :snack_name, @suggestions, {include_blank: true}, class: "btn btn-secondary dropdown-toggle"  %> 
+      <!-- this is bad practice, would design differently for client facing -->
+      <%= fr.hidden_field :location, value: "greenlake"  %>
+      <%= submit_tag("Suggest", class: "btn btn-primary pull-right") %>
+    <% end %>
+
+
 
    <br>
-   <h3> Suggest a snack! </h3>
-   <%= form_for :suggestion do |f| %>
-      <div class="form-group row">
-        <label class="col-sm-1 col-form-label" for="snack-form">Snack:</label> 
-        <div class="col-sm-10">
-          <%= f.text_field :snack_name, class: "form-control", id: "snack-form", placeholder: "snack name" %>
+     <h3> Suggest a snack! </h3>
+     <%= form_for :suggestion do |f| %>
+        <div class="form-group row">
+          <label class="col-sm-1 col-form-label" for="snack-form">Snack:</label> 
+          <div class="col-sm-10">
+            <%= f.text_field :snack_name, class: "form-control", id: "snack-form", placeholder: "snack name" %>
+          </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-1 col-form-label" for="location-form">Location:</label> 
-        <div class="col-sm-10">
-          <%= f.text_field :location, class: "form-control", id: "location-form", placeholder: "location" %>
+        <div class="form-group row">
+          <label class="col-sm-1 col-form-label" for="location-form">Location:</label> 
+          <div class="col-sm-10">
+            <%= f.text_field :location, class: "form-control", id: "location-form", placeholder: "location" %>
+          </div>
         </div>
-      </div>
-    <%= f.submit "Suggest", class: "btn btn-primary" %>
-<% end %>
+      <%= f.submit "Suggest", class: "btn btn-primary" %>
+    <% end %>
 
   <% end %>
+  </div>
 </div>

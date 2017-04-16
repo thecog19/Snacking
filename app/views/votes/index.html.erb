@@ -42,7 +42,7 @@
         <% @suggestions.each do |item| %>
           <tr>
             <td><%= item["name"] %></td>
-            <td id=<%="#{item["name"]}-votes"%>><%= item["votes"] %></td>
+            <td id=<%="#{item["name"].delete(' ')}-votes"%>><%= item["votes"] %></td>
             <td><%= item["lastPurchaseDate"] || "Never Purchased!" %></td>
             <td>
             <% unless @disabled.include?(item["name"]) %>
@@ -53,9 +53,10 @@
                                       :method=> :post, 
                                       :remote => true, 
                                       class: "btn btn-primary vote-button", 
-                                      id: "#{item["name"]}"  
+                                      id: "#{item["name"].delete(' ')}"  
               %>
-              <div class="hidden">Already Voted</div>
+              <div class="hidden" 
+               id=<%="#{item["name"].delete(' ')}-hidden"%>> Already Voted</div>
             <% else %>
               Already Voted
             <% end %>

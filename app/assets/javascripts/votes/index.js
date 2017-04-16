@@ -7,9 +7,9 @@ var SnackManager = (function(){
     //then when the vote registers it updates how many votes the user has available
 
     //the button should never be present when the user has already voted.
-
     $(".vote-button").on("click", function(event){
         $("#" + event.target.id).hide()
+        $("#" + event.target.id + "-hidden").removeClass() 
         var value = $("#" + event.target.id + "-votes").text()
         $("#" + event.target.id + "-votes").text(parseInt(value)  + 1)
     })
