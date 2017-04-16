@@ -1,10 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Suggestion, type: :model do
-  let(:suggestion) {Suggestion.create(name: "test", votes: 8)}
+  let(:suggestion) {Suggestion.create(name: "test", votes: 8, location: "red")}
 
   it "validates for name existance" do
-    expect(Suggestion.create(name: nil).valid?).to be false
+    expect(Suggestion.create(name: nil, location: "Red").valid?).to be false
+  end
+
+  it "validates for location existence" do
+    expect(Suggestion.create(name: "POTATO", votes: 9).valid?).to be false
   end
 
   it "validates for name uniqueness" do
@@ -41,7 +45,7 @@ RSpec.describe Suggestion, type: :model do
   end
   describe "#unused_api_suggestions" do
     let(:snackdata) {double("snackdata")}
-    
+
     it "returns an array" do
        allow(snackdata).to receive(:optional_snacks).and_return([{"name" => "test"}]) 
       expect(Suggestion.unused_api_suggestions(snackdata)).to be_a(Array)
@@ -60,4 +64,23 @@ RSpec.describe Suggestion, type: :model do
   
   end
 
+  describe "#permanent_names" do
+    let(:snackdata) {double("snackdata")}
+
+    it "returns an array" do
+       allow(snackdata).to receive(:permanent_snacks).and_return([{"name" => "test"}]) 
+      expect(Suggestion.permanent_names(snackdata)).to be_a(Array)
+    end
+
+    it "gets data from the API" do 
+       expect(snackdata).to receive(:permanent_snacks).and_return([{"name" => "test"}]) 
+      Suggestion.permanent_names(snackdata)
+    end
+
+    it "returns only names" do 
+      suggestion
+      allow(snackdata).to receive(:permanent_snacks).and_return([{"name" => "test"}, {"name" => "orange"}]) 
+      expect(Suggestion.permanent_names(snackdata)).to contain_exactly("orange", "test")
+    end
+  end
 end

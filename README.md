@@ -14,7 +14,7 @@ We should be proof against SQL injection and XSS attacks due to inbuilt ruby sec
 
 Testing:
 
-This is pretty througuly tested for most model functions.
+This is pretty througuly tested for most model functions. Not everything that I wish were tested is tested due to time constraints. Notably the suggestion_spec.rb hits the API. 
 
 I also did not do integration tests for an inward facing app. Had I had more time it might have been a consideration, although it should be noted that integration tests are a polarizing topic, their worth is certainly debatable. 
 

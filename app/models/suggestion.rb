@@ -1,6 +1,19 @@
 class Suggestion < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
+  validate :name_not_permanent
+  validates :location, presence: true
+
+  def name_not_permanent(sug = Suggestion)
+    if name.present? && sug.permanent_names.include?(name)
+      errors.add("That is a permanently stocked snack")
+    end
+  end
+
+
+  def self.permanent_names(snackdata = SnackData)
+    reduce_to_names(snackdata.permanent_snacks)
+  end
 
   #this method gets the optional snacks and adds the current vote total to the ones that are still there.  
   def self.suggestion_data(snackdata = SnackData)
